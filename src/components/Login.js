@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axiosWithAuth from "../helpers/axiosWithAuth";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ const Login = () => {
   // when you have handled the token, navigate to the BubblePage route
 
   const [credentials, setCredentials] = useState(initialState);
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const [error, setError] = useState("");
 
