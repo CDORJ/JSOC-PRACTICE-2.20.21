@@ -1,37 +1,95 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import axiosWithAuth from "../helpers/axiosWithAuth";
 import axios from "axios";
 
+const initialState = () => ({
+  username: "",
+  password: "",
+});
+
 const Login = () => {
+  // console.log("Login props", isLoggedIn);
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  useEffect(()=>{
+  const [credentials, setCredentials] = useState(initialState);
+  const { id } = useParams();
+
+  const [error, setError] = useState("");
+
+  const history = useHistory();
+
+  const handleChanges = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const logIn = (e) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post("/login", credentials)
+      .then((res) => {
+        localStorage.setItem("token", res.data.payload);
+        // setIsLoggedIn(true);
+        history.push("/protected");
+      })
+      .catch((err) => {
+        console.log("LOGIN FUNCTION Error", err.response.data.error);
+        setError("Username or password not valid.");
+      });
+  };
+
+  useEffect(() => {
     axios
       .delete(`http://localhost:5000/api/colors/1`, {
-        headers:{
-          'authorization': "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98"
-        }
+        headers: {
+          authorization:
+            "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+        },
       })
-      .then(res=>{
-        axios.get(`http://localhost:5000/api/colors`, {
-          headers:{
-            'authorization': ""
-          }
-        })
-        .then(res=> {
-          console.log(res);
-        });
-        console.log(res);
-      })
-  });
+      .then((res) => {
+        axios
+          .get(`http://localhost:5000/api/colors`, {
+            headers: {
+              authorization: "",
+            },
+          })
+          .then((res) => {
+            console.log("DELETE ERROR", res);
+          });
+        console.log("DELETE ERROR 2", res);
+      });
+  }, [credentials]);
 
   return (
-    <>
-      <h1>
-        Welcome to the Bubble App!
-        <p>Build a login page here</p>
-      </h1>
-    </>
+    <form onSubmit={logIn}>
+      <label htmlFor="username">username:</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        value={credentials.username}
+        onChange={handleChanges}
+      />
+      <br />
+      <label htmlFor="password">password:</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        value={credentials.password}
+        onChange={handleChanges}
+      />
+
+      {/* <button type="submit" onClick={() => setIsLoggedIn(!isLoggedIn)}>login</button> */}
+      <button type="submit">login!</button>
+      <br></br>
+      {error ? <div style={{ color: "red" }}>{error}</div> : <></>}
+      <br />
+    </form>
   );
 };
 
