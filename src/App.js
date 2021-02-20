@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, NavLink, Route, Switch } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, NavLink, Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import BubblePage from './components/BubblePage';
 
@@ -16,6 +16,7 @@ function App() {
           <PrivateRoute path='/protected'>
             <BubblePage />
           </PrivateRoute>
+          <Redirect exact from='/protected/reload' to='/protected' />
         </Switch>
         
       </div>

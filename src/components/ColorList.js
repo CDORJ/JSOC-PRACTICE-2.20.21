@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import axiosWithAuth from "../helpers/axiosWithAuth";
 import EditMenu from "./EditMenu";
 
@@ -8,11 +9,10 @@ const initialColor = {
   code: { hex: "" },
 };
 
-const ColorList = ({ colors, updateColors }) => {
+const ColorList = ({ colors, updateColors, getColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  const { id } = useParams();
-
+  const { push } = useHistory();
   const editColor = (color) => {
     setEditing(true);
     setColorToEdit(color);
@@ -23,6 +23,7 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then((res) => {
+        console.log("ColorList.js: saveEdit: axios.put response: ", res);
         updateColors(
           colors.map((color) => {
             if (color.id === res.data.id) {
@@ -33,23 +34,15 @@ const ColorList = ({ colors, updateColors }) => {
         );
         setEditing(false);
         setColorToEdit(initialColor);
+        push("/protected/reload");
       })
       .catch((err) => console.log(`error editing ${colorToEdit.id} :`, err));
   };
 
   const deleteColor = (color) => {
-    axiosWithAuth()
-      .delete(`/colors/${color.id}`)
-      .then((res) => {
-        updateColors(
-          colors.filter((color) => {
-            if (color.id !== res.data) {
-              return color;
-            }
-          })
-        );
-      })
-      .catch((err) => console.log(`error deleting ${color.id}: `, err));
+    axiosWithAuth().delete(`/colors/${color.id}`);
+    getColors();
+    push("/protected/reload");
   };
 
   return (

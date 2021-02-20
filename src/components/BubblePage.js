@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosWithAuth from '../helpers/axiosWithAuth';
+import axiosWithAuth from "../helpers/axiosWithAuth";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
@@ -7,25 +7,28 @@ import ColorList from "./ColorList";
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
-  useEffect(() => {
+  const getColors = () => {
     axiosWithAuth()
-      .get('/colors')
-      .then((res) => { 
-        console.log("cd: BubblePage.js: axios.get response: ", res)
-        setColorList(res.data)
+      .get("/colors")
+      .then((res) => {
+        console.log("cd: BubblePage.js: axios.get response: ", res);
+        setColorList(res.data);
       })
       .catch((err) => {
-        console.log("cd: BubblePage.js: axios.get error: ", err)
-      })
-  }, [])
-  
+        console.log("cd: BubblePage.js: axios.get error: ", err);
+      });
+  };
+  useEffect(() => {
+    getColors();
+  }, []);
+
   if (!colorList) {
-    return <div>"User must be logged in to do that"</div>
+    return <div>"User must be logged in to do that"</div>;
   }
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList colors={colorList} updateColors={setColorList} getColors={getColors}/>
       <Bubbles colors={colorList} />
     </>
   );
