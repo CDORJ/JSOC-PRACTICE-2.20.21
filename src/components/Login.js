@@ -10,30 +10,30 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const { push } = useHistory();
 
-  // useEffect(() => {
-  //   axios
-  //     .delete(`http://localhost:5000/api/colors/1`, {
-  //       headers: {
-  //         authorization:
-  //           "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       axios
-  //         .get(`http://localhost:5000/api/colors`, {
-  //           headers: {
-  //             authorization: "",
-  //           },
-  //         })
-  //         .then((res) => {
-  //           console.log(res);
-  //         });
-  //       console.log(res);
-  //     });
-  // });
+  useEffect(() => {
+    axios
+      .delete(`http://localhost:5000/api/colors/1`, {
+        headers: {
+          authorization:
+            "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`http://localhost:5000/api/colors`, {
+            headers: {
+              authorization: "",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          });
+        console.log(res);
+      });
+  });
 
   const handleChange = (e) => {
     setLogin({
@@ -48,11 +48,17 @@ const Login = () => {
       .post('/login', login)
       .then((res) => {
         console.log("cd: Login.js: handleLogin: axios post response: ", res)
-        // localStorage.setItem("token", res.data)
+        localStorage.setItem("token", res.data.payload)
+        push('/protected')
       })
       .catch((err) => {
         console.log("cd: Login.js: handleLogin: axios.post error, ", err)
+        setError("Username or Password not valid.")
        })
+  }
+
+  if (error) {
+    return <div>{error}</div>
   }
 
   return (
@@ -65,7 +71,7 @@ const Login = () => {
         <label htmlFor="name" /> Username
         <input
           id="name"
-          name="name"
+          name="username"
           value={login.username}
           placeholder="Username"
           onChange={handleChange}
