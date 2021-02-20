@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-// import axiosWithAuth from "../helpers/axiosWithAuth";
+import axiosWithAuth from "../helpers/axiosWithAuth";
 import EditMenu from "./EditMenu";
-import axios from "axios";
+// import axios from "axios";
 
 const initialColor = {
   color: "",
@@ -21,25 +21,34 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = (e) => {
     e.preventDefault();
-    axios
-      .put(`/colors/${id}`, colorToEdit)
+    axiosWithAuth()
+      // REVIEW colorToEdit -- sending the form back
+      .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
       .then((response) => {
-        console.log("PUT SUCCESS", response.data);
-        updateColors(response.data);
-      })
-      .catch((err) => {
-        console.log("PUT ERROR", err);
+        console.log("PUT SUCCESS", response);
+        setEditing(false); // no longer editing
+        updateColors(
+          // setting original list to be updated with put
+          colors.map((color) => {
+            return color.id === colorToEdit.id ? response.data : color; // otherwise return regular color
+            // updateColors(response.data);
+          })
+        );
       });
   };
 
   const deleteColor = (color) => {
-    axios
-      .delete(`/colors/:${id}`)
-      .then((response) => {
-        console.log("DELETE COLOR SUCCESS", response.data);
+    axiosWithAuth()
+      .delete(`http://localhost:5000/api/colors/${color.id}`)
+      .then((res) => {
+        updateColors(
+          colors.filter((colorItem) => {
+            return colorItem.id !== color.id; // return ONLY
+          })
+        );
       })
-      .catch((error) => {
-        console.log("DELETE ERROR", error);
+      .catch((err) => {
+        console.log(err.message, "error deleting");
       });
   };
 
