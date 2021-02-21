@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { useEvent } from "@testing-library/user-event";
 import BubblePage from "./BubblePage";
 
 test("Renders BubblePage without errors", () => {
