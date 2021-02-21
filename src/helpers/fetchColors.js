@@ -1,8 +1,12 @@
-import axiosWithAuth from './axiosWithAuth';
+import axiosWithAuth from "./axiosWithAuth";
 
-const fetchColors = () => {
-    return axiosWithAuth().get('/colors').then((res) => {
-        return res
+export const fetchColors = () => {
+  return axiosWithAuth()
+    .get("/colors")
+    .then((res) => {
+      return res.data;
     })
-    .catch((err) => {return err})
-}
+    .catch((err) => {
+      return err;
+    });
+};

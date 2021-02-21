@@ -11,11 +11,11 @@ const BubblePage = () => {
     axiosWithAuth()
       .get("/colors")
       .then((res) => {
-        console.log("cd: BubblePage.js: axios.get response: ", res);
+        // console.log("cd: BubblePage.js: axios.get response: ", res);
         setColorList(res.data);
       })
       .catch((err) => {
-        console.log("cd: BubblePage.js: axios.get error: ", err);
+        // console.log("cd: BubblePage.js: axios.get error: ", err);
       });
   };
   useEffect(() => {

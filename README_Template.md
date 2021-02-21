@@ -14,7 +14,7 @@ _Sprint challenges open at Midnight PST on Thursday and close at 5pm PST on Frid
 
 ## Introduction
 
-[Paragraph descripting project functioning. Include any screenshots or gifs of the final output here. As an example:
+[Paragraph description project functioning. Include any screenshots or gifs of the final output here. As an example:
 
 In this project you will create a login page and request a token from the server that you'll use to send all other requests to the server. You will then be able to fetch the color data array, update data, and delete data, and watch the fun happen!]
 
@@ -79,7 +79,7 @@ In this project you will create a login page and request a token from the server
 
 ### Reference Materials
 
-[include any links or descriptions nessissary for project development]
+[include any links or descriptions necessary for project development]
 
 #### [Reference type: API Documentation]
 
@@ -95,11 +95,11 @@ In this project you will create a login page and request a token from the server
 
 ## Submission format
 
-* [ ] Submit via Codegrade by commiting and pushing any new changes.
+* [ ] Submit via Codegrade by committing and pushing any new changes.
 * [ ] Submit a pull-request to merge <firstName-lastName> branch into main. **Please don't merge your own pull request and make sure you are on your own repo**
 * [ ] Check codegrade for automated feedback.
 * [ ] Check codegrade on Monday following the Sprint Challenge for reviewer feedback. For more information on how to access and read your feedback, check [here](https://www.notion.so/lambdaschool/How-to-View-Feedback-in-CodeGrade-c5147cee220c4044a25de28bcb6bb54a)
-* [ ] Any changes pushed to your <firstName-lastName> branch will resubmited to codegrade if pushed before the sprint challenge deadline. Changes after the deadline will not be reviewed.
+* [ ] Any changes pushed to your <firstName-lastName> branch will resubmit to codegrade if pushed before the sprint challenge deadline. Changes after the deadline will not be reviewed.
 
 ## Interview Questions
 

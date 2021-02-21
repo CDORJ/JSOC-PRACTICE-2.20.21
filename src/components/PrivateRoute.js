@@ -10,7 +10,7 @@ export default function PrivateRoute(props) {
         return localStorage.getItem("token") ? (
           children
         ) : (
-          <Redirect to={{ pathname: "/signin", state: { from: location } }} />
+          <Redirect to={{ pathname: "/", state: { from: location } }} />
         );
       }}
     />

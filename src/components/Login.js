@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { useHistory } from "react-router-dom";
 import axiosWithAuth from "../helpers/axiosWithAuth";
 
 const Login = () => {
@@ -14,7 +13,7 @@ const Login = () => {
   const { push } = useHistory();
 
   useEffect(() => {
-    axios
+    axiosWithAuth()
       .delete(`http://localhost:5000/api/colors/1`, {
         headers: {
           authorization:
@@ -22,7 +21,7 @@ const Login = () => {
         },
       })
       .then((res) => {
-        axios
+        axiosWithAuth()
           .get(`http://localhost:5000/api/colors`, {
             headers: {
               authorization: "",
@@ -40,25 +39,25 @@ const Login = () => {
       ...login,
       [e.target.name]: e.target.value,
     });
-  };  
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
     axiosWithAuth()
-      .post('/login', login)
+      .post("/login", login)
       .then((res) => {
-        console.log("cd: Login.js: handleLogin: axios post response: ", res)
-        localStorage.setItem("token", res.data.payload)
-        push('/protected')
+        console.log("cd: Login.js: handleLogin: axios post response: ", res);
+        localStorage.setItem("token", res.data.payload);
+        push("/protected");
       })
       .catch((err) => {
-        console.log("cd: Login.js: handleLogin: axios.post error, ", err)
-        setError("Username or Password not valid.")
-       })
-  }
+        console.log("cd: Login.js: handleLogin: axios.post error, ", err);
+        setError("Username or Password not valid.");
+      });
+  };
 
   if (error) {
-    return <div>{error}</div>
+    return <div>{error}</div>;
   }
 
   return (
@@ -86,7 +85,7 @@ const Login = () => {
           onChange={handleChange}
           type="password"
         />
-        <button type='submit'>Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </>
   );
@@ -95,8 +94,8 @@ const Login = () => {
 export default Login;
 
 //Task List:
-//1. Build a form containing a username and password field.
-//2. Add whatever state necessary for form functioning.
+//1. Build a form containing a username and password field. ✔️
+//2. Add whatever state necessary for form functioning. ✔️
 //3. MAKE SURE THAT FORM INPUTS INCLUDE THE LABEL TEXT "username" and "password" RESPECTIVELY.
 //4. If either the username or password is not displayed display EXACTLY the following words: Username or Password not valid.
 //5. If the username / password is equal to Lambda School / i<3Lambd4, save that token to localStorage.
